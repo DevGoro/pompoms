@@ -4,6 +4,7 @@ import notifier from "node-notifier";
 import { pomodoroLongBreak } from "./longBreak";
 import { pomodoroShortBreak } from "./shortBreak";
 import { pomodoroWork } from "./work";
+import { pomodoroLoopPauser } from "./loopPauser";
 
 let iterations = 0;
 
@@ -47,6 +48,8 @@ export const pomodoroLoop = async (
       });
     }
 
+    await pomodoroLoopPauser()
+
     console.log(`
   That's ${iterations} full Pomodoro rounds complete. Great work!
     Time for a nice ${chalk.blueBright(
@@ -62,6 +65,8 @@ export const pomodoroLoop = async (
         time: 10000,
       });
     }
+
+    await pomodoroLoopPauser()
 
     console.log(`
   Okay, good stuff. Break's over... ${chalk.yellowBright.bold(

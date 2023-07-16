@@ -3,6 +3,7 @@ import chalk from "chalk";
 import emoji from "node-emoji";
 
 import { waitOneMin } from "../utils/sleep";
+import { pomodoroLoopPauser } from "./loopPauser";
 
 const workInMins = 25;
 
@@ -15,11 +16,15 @@ export const pomodoroWork = async () => {
     barIncompleteChar: "\u2591",
     hideCursor: true,
   });
+
+  await pomodoroLoopPauser(w1, 0)
+  
   w1.start(workInMins, 0);
 
   let i = 0;
   while (i < workInMins) {
     await waitOneMin();
+    await pomodoroLoopPauser(w1, i)
     i++;
     w1.update(i);
   }

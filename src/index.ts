@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { pomodoroLoop } from "./pomodoro/loop";
+import { TaskManager } from "./utils/TaskManager";
 import {
   colourInspirationMessage,
   endMessage,
@@ -20,6 +21,8 @@ let showSystemNotifications = true;
 const main = async () => {
   welcomeMessage();
   ({ longBreakInMins, roundsToComplete } = await getUserInput(longBreakInMins));
+  await TaskManager.setup()
+  TaskManager.registerListener()
   await readyMessage();
   await colourInspirationMessage();
   while (roundsCompleted < roundsToComplete || roundsToComplete === 0) {
